@@ -1,0 +1,80 @@
+package com.prm392.application.activities;
+import android.os.Bundle;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+
+import com.prm392.application.R;
+import com.prm392.application.adapters.NewsAdapter;
+import com.prm392.application.api.ApiClient;
+import com.prm392.application.api.ApiServices;
+import com.prm392.application.models.News;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private NewsAdapter newsAdapter;
+    private ApiServices apiService;
+    private List<News> newsList = new ArrayList<>();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_activity);
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        newsAdapter = new NewsAdapter();
+        recyclerView.setAdapter(newsAdapter);
+
+        // Add a default news item
+        addDefaultNewsItem();
+        addDefaultNewsItem();
+        addDefaultNewsItem();
+
+        apiService = ApiClient.getClient().create(ApiServices.class);
+
+        fetchNews();
+    }
+
+    private void addDefaultNewsItem() {
+        News defaultNews = new News();
+        defaultNews.setNewsId(1);
+        defaultNews.setTitle("Welcome to News App");
+        defaultNews.setContent("This is a default news item to check if the layout works.");
+        defaultNews.setImage("https://via.placeholder.com/150"); // Example image URL
+        defaultNews.setAuthorId(1);
+        defaultNews.setPublishedAt("2024-07-03T00:00:00");
+        defaultNews.setUpdatedAt("2024-07-03T00:00:00");
+
+        newsList.add(defaultNews);
+        newsAdapter.setNewsList(newsList);
+    }
+
+    private void fetchNews() {
+        apiService.getNews().enqueue(new Callback<List<News>>() {
+            @Override
+            public void onResponse(Call<List<News>> call, Response<List<News>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    newsAdapter.setNewsList(response.body());
+                } else {
+                    Toast.makeText(MainActivity.this, "No news available", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<News>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Failed to load news", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}
