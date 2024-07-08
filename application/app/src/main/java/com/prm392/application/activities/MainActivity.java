@@ -1,6 +1,7 @@
 package com.prm392.application.activities;
 import android.os.Bundle;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        newsAdapter = new NewsAdapter();
+
+        // Initialize the adapter with the activity context
+        newsAdapter = new NewsAdapter(this);
         recyclerView.setAdapter(newsAdapter);
 
         // Add a default news item
