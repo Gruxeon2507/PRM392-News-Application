@@ -24,6 +24,7 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         // Set up the action bar for back navigation
         if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("News Application");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }

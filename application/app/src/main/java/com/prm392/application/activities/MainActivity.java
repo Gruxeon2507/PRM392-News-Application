@@ -1,9 +1,10 @@
 package com.prm392.application.activities;
 import android.os.Bundle;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,9 +38,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        // Set up the action bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("News Application");
+        }
+
+        // Set up new RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
         categoryRecyclerView = findViewById(R.id.categoryRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Add divider between news items
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
 
         // Initialize the adapter with the activity context
         newsAdapter = new NewsAdapter(this);
