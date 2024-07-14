@@ -1,5 +1,6 @@
 package com.prm392.application.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class    MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView categoryRecyclerView;
@@ -37,11 +38,15 @@ public class MainActivity extends AppCompatActivity {
     private List<News> newsList = new ArrayList<>();
     private List<String> categoryList = new ArrayList<>();
     private String selectedCategory = "All";
+    private boolean isLoggedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        // Get the login status from the intent
+        isLoggedIn = getIntent().getBooleanExtra("isLoggedIn", false);
 
         // Set up the action bar
         if (getSupportActionBar() != null) {
@@ -107,7 +112,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Show login/logout option based on login status
+        MenuItem loginItem = menu.findItem(R.id.action_login);
+        MenuItem logoutItem = menu.findItem(R.id.action_logout);
+        if (isLoggedIn) {
+            loginItem.setVisible(false);
+            logoutItem.setVisible(true);
+        } else {
+            loginItem.setVisible(true);
+            logoutItem.setVisible(false);
+        }
+
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_search) {
+            return true;
+        } else if (id == R.id.action_login) {
+            login();
+            return true;
+        } else if (id == R.id.action_logout) {
+            logout();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private void loadCategories() {
@@ -179,5 +211,16 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         newsAdapter.setNewsList(filteredNewsList);
+    }
+
+    private void login() {
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void logout() {
+        isLoggedIn = false;
+        invalidateOptionsMenu();
     }
 }

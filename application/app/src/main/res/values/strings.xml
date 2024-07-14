@@ -1,7 +1,6 @@
 <resources>
-    <!-- Existing string resources -->
     <string name="app_name">News Application</string>
-    <!-- Add the search string resource -->
     <string name="search">Search</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
 </resources>
-
