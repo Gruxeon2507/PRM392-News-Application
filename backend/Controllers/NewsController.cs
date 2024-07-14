@@ -21,9 +21,10 @@ namespace backend.Controllers
 
         // GET: api/News
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<NewsDto>>> GetNews(NewsFilterDTO newsFilterDto)
+        //public async Task<ActionResult<IEnumerable<NewsDto>>> GetNews(NewsFilterDTO? newsFilterDto)
+        public async Task<ActionResult<IEnumerable<NewsDto>>> GetNews(String? category, String? searchString)
         {
-            return await _context.News
+            List<NewsDto> news = await _context.News
                 .Select(news => new NewsDto
                 {
                     NewsId = news.NewsId,
@@ -31,9 +32,12 @@ namespace backend.Controllers
                     Content = news.Content,
                     AuthorId = news.AuthorId,
                     PublishedAt = news.PublishedAt,
-                    UpdatedAt = news.UpdatedAt
+                    UpdatedAt = news.UpdatedAt,
+                    Image = ""
                 })
                 .ToListAsync();
+
+            return news;
         }
 
         // GET: api/News/5

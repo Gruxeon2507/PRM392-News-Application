@@ -6,6 +6,7 @@
         public string Title { get; set; } = null!;
         public string Content { get; set; } = null!;
         public int? AuthorId { get; set; }
+        public string? Image { get; set; }
         public DateTime? PublishedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }

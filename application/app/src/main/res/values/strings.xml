@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">application</string>
+    <!-- Existing string resources -->
+    <string name="app_name">News Application</string>
+    <!-- Add the search string resource -->
+    <string name="search">Search</string>
 </resources>
+
