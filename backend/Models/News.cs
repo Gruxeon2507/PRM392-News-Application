@@ -17,6 +17,7 @@ namespace backend.Models
         public int? AuthorId { get; set; }
         public DateTime? PublishedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public string? Images { get; set; }
 
         public virtual User? Author { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

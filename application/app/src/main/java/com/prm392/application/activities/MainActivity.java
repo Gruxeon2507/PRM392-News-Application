@@ -19,6 +19,7 @@ import com.prm392.application.adapters.CategoryAdapter;
 import com.prm392.application.adapters.NewsAdapter;
 import com.prm392.application.api.ApiClient;
 import com.prm392.application.api.ApiServices;
+import com.prm392.application.models.Comment;
 import com.prm392.application.models.News;
 
 import java.util.ArrayList;
@@ -144,12 +145,12 @@ public class    MainActivity extends AppCompatActivity {
 
     private void loadCategories() {
         // Add some sample categories
-        categoryList.add("All");
-        categoryList.add("News");
-        categoryList.add("Sports");
-        categoryList.add("Health");
-        categoryList.add("Business");
-        categoryList.add("Entertainment");
+        categoryList.add("Tất Cả");
+        categoryList.add("Dịch Vụ");
+        categoryList.add("Thể Thao");
+        categoryList.add("Sức Khỏe");
+        categoryList.add("Kinh Tế");
+        categoryList.add("Giải Trí");
 
         // Notify the adapter that the data has changed
         categoryAdapter.notifyDataSetChanged();
@@ -165,6 +166,24 @@ public class    MainActivity extends AppCompatActivity {
         defaultNews.setPublishedAt("2024-07-03T00:00:00");
         defaultNews.setUpdatedAt("2024-07-03T00:00:00");
 
+        // Add sample comments
+        List<Comment> comments = new ArrayList<>();
+        Comment comment1 = new Comment();
+        comment1.setId(1);
+        comment1.setNewsId(1);
+        comment1.setUserId(1);
+        comment1.setContent("This is a sample comment.");
+        comments.add(comment1);
+
+        Comment comment2 = new Comment();
+        comment2.setId(2);
+        comment2.setNewsId(1);
+        comment2.setUserId(2);
+        comment2.setContent("This is another sample comment.");
+        comments.add(comment2);
+
+        defaultNews.setComments(comments);
+
         newsList.add(defaultNews);
         newsAdapter.setNewsList(newsList);
     }
@@ -176,6 +195,7 @@ public class    MainActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     newsList = response.body();
                     newsAdapter.setNewsList(newsList);
+                    addDefaultNewsItem();
                 } else {
                     Toast.makeText(MainActivity.this, "No news available", Toast.LENGTH_SHORT).show();
                 }
@@ -191,7 +211,7 @@ public class    MainActivity extends AppCompatActivity {
 
     private void filterNewsByCategory() {
         List<News> filteredNewsList = new ArrayList<>();
-        if (selectedCategory.equals("All")) {
+        if (selectedCategory.equals("Tất Cả")) {
             filteredNewsList.addAll(newsList);
         } else {
             for (News news : newsList) {

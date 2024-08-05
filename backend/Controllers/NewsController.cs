@@ -33,7 +33,7 @@ namespace backend.Controllers
                     AuthorId = news.AuthorId,
                     PublishedAt = news.PublishedAt,
                     UpdatedAt = news.UpdatedAt,
-                    Image = ""
+                    Image = news.Images,
                 })
                 .ToListAsync();
 

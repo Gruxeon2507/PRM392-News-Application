@@ -29,7 +29,7 @@ namespace backend.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server =(local); database =PRM392_News_Application;uid=duckm;pwd=123456;Trusted_Connection=True;Encrypt=False");
+                optionsBuilder.UseSqlServer("Server=(local);Database=PRM392_News_Application;User Id=duckm;Password=123456;Trusted_Connection=True;Encrypt=False;");
             }
         }
 
@@ -68,6 +68,10 @@ namespace backend.Models
                 entity.Property(e => e.AuthorId).HasColumnName("author_id");
 
                 entity.Property(e => e.Content).HasColumnName("content");
+
+                entity.Property(e => e.Images)
+                    .HasMaxLength(255)
+                    .HasColumnName("images");
 
                 entity.Property(e => e.PublishedAt)
                     .HasColumnType("datetime")

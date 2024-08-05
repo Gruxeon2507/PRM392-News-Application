@@ -50,7 +50,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
             News news = newsList.get(position);
             holder.title.setText(news.getTitle());
-            holder.content.setText(news.getContent());
+            holder.content.setText(news.getSumarize());
 
             if (news.getImage() != null && !news.getImage().isEmpty()) {
                 Picasso.get().load(news.getImage()).into(holder.imageView);
@@ -64,6 +64,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                 intent.putExtra("title", news.getTitle());
                 intent.putExtra("content", news.getContent());
                 intent.putExtra("image", news.getImage());
+                intent.putExtra("sumarize", news.getSumarize());
                 context.startActivity(intent);
             });
         }
@@ -75,6 +76,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         public void setNewsList(List<News> newsList) {
             this.newsList = newsList;
+            for(News n : newsList){
+                if(n.getContent().length()>51){
+                    n.setSumarize(n.getContent().substring(0,50)+"...");
+                }else{
+                    n.setSumarize(n.getContent()+"...");
+                }
+            }
             notifyDataSetChanged();
         }
 }

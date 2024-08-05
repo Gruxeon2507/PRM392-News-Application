@@ -1,15 +1,20 @@
 package com.prm392.application.models;
 
+import java.util.List;
+
 public class News {
     private int newsId;
     private String title;
     private String content;
+    private String sumarize;
     private String image;
-    private Integer authorId;
+    private int authorId;
     private String publishedAt;
     private String updatedAt;
+    private List<Comment> comments; // Add this line
 
     // Getters and Setters
+
     public int getNewsId() {
         return newsId;
     }
@@ -41,12 +46,19 @@ public class News {
     public void setImage(String image) {
         this.image = image;
     }
+    public String getSumarize() {
+        return sumarize;
+    }
 
-    public Integer getAuthorId() {
+    public void setSumarize(String sumarize) {
+        this.sumarize = sumarize;
+    }
+
+    public int getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Integer authorId) {
+    public void setAuthorId(int authorId) {
         this.authorId = authorId;
     }
 
@@ -64,5 +76,13 @@ public class News {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
